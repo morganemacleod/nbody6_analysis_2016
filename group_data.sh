@@ -46,4 +46,7 @@
 #grep PHYSICAL output1/output.dat > scales.dat
 # 
 echo "t= ..."
-grep "T =" output*/output.dat > time_summary.dat
+grep " T = " output*/output.dat > time_summary.dat
+#
+echo "snaptime"
+grep "time" snapdata.dat | cut -c 5- > snaptime.dat
