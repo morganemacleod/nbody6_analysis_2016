@@ -1,0 +1,7 @@
+# Some basic notes on analysis code and procedures
+
+# 5/7/2015 MM
+# begining analysis steps
+1. put data all into "outputn" folders
+2. run sh group_data_loop.sh to call group_data.sh in each folder
+3. clean the scales with clean_scales.py

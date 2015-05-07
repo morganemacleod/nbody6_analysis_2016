@@ -4,7 +4,8 @@ import numpy as np
 
 fin = 'scales.dat'
 fout = 'scales_astropy.dat'
-folders = ["../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
+folders = ["../king_w3_A/","../king_w3_B/","../king_w3_C/","../king_w3_D/",
+           "../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
            "../king_w7_A/","../king_w7_B/","../king_w7_C/",
            "../king_w7lk_B/","../king_w7lk_C/","../king_w7lk_D/"]
 

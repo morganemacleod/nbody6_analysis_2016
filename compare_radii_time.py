@@ -15,15 +15,16 @@ plt.rcParams['legend.handletextpad'] = 0.1
 plt.rcParams['font.family'] = 'stixgeneral'
 plt.rcParams['font.size'] = 16
 
-
-folders = ["../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
+folders = ["../king_w3_A/","../king_w3_B/","../king_w3_C/","../king_w3_D/",
+           "../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
            "../king_w7_A/","../king_w7_B/","../king_w7_C/",
            "../king_w7lk_B/","../king_w7lk_C/","../king_w7lk_D/"]
 
 chm_file = "core_hm_radii.dat"
 time_file = "mttime.dat"
 
-colors = ["DarkGreen","DarkGreen","DarkGreen",
+colors = ["SaddleBrown","SaddleBrown","SaddleBrown","SaddleBrown",
+          "DarkGreen","DarkGreen","DarkGreen",
           "Black","Black","Black",
           "DodgerBlue","DodgerBlue","DodgerBlue"]
 
