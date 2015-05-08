@@ -15,6 +15,7 @@ with open("fort.83") as f:
         if line[0:9] == " ## BEGIN":
             if out: out.close()
             out = open("hr/hr_single_%05i.dat" % count, "w")
+            print "writing ... hr/hr_single_%05i.dat" % count
             timeout.write( line.split()[3] )
             timeout.write("\n")
             count = count+1

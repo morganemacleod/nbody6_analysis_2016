@@ -7,3 +7,5 @@
 3. clean the scales with clean_scales.py
 4. core and hm radii (time) for all files in compare_radii_time.py
 5. number as a function of time for all files in plot_N_time.py
+6. run sh split_snaps_loop.sh to split all snapshots
+7. run sh split_hr_loop.sh to split all hr diagram files
