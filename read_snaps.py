@@ -48,6 +48,7 @@ plt.rcParams['font.size'] = 16
 #
 # PARAMETERS
 #
+#
 npart0 = 100001
 bhmassf = 0.002
 # SCALINGS 
@@ -59,14 +60,15 @@ MAVG = scale['mavg'].data[0]  # Avg mass in msun
 SU = scale['su'].data[0]   # NB length to solar radii ? 
 TSTAR = scale['tstar'].data[0] # TIMESCALE IN MYR
 
-filenames = glob.glob('snaps/snap_0000*.dat')
+
+filenames = glob.glob('snaps/snap_0000[0-9].dat')
 filenames = sorted(filenames)
 print filenames
 print ""
 print "Reading ",len(filenames), "  files..."
 print ""
 # Setup some array-binning 
-binwidth = 1
+binwidth = 100
 nbins = int(len(filenames)/binwidth)
 print ""
 print "binning ", len(filenames)," files into ",nbins, " bins of width ",binwidth 
@@ -93,6 +95,7 @@ if calc_profiles :
     menc = np.zeros((len(filenames),mpoints))
     menc_bh = np.zeros((len(filenames),mpoints))
     ndens = np.zeros((len(filenames),mpoints))
+    ndens_bh = np.zeros((len(filenames),mpoints))
     dens = np.zeros((len(filenames),mpoints))
     dens_bh = np.zeros((len(filenames),mpoints))
     
@@ -114,16 +117,12 @@ for i,filename in enumerate(filenames):
     #snap_nobh = snap[:][snap['ID']>1]
     #snap_bh = snap[:][snap['ID']==1]
     snap_bh = snap[:][snap['mass']>0.99*bhmassf]
-    print snap_bh
     snap_bh = snap_bh[:][snap_bh['KS']==14]
     print snap_bh
     #snap_bh = snap_bh[:][snap_bh['ID']<=npart0]
     snap_nobh = snap[:][snap['mass']<bhmassf]
-    print snap[:][snap['ID']>=npart0]
-    
-
-    #print snap_bh
-    
+    #print snap[:][snap['ID']>=npart0]
+        
     # center of mass of the stars
     cm = [np.sum(snap_nobh['x']*snap_nobh['mass']),
           np.sum(snap_nobh['y']*snap_nobh['mass']),
@@ -143,8 +142,6 @@ for i,filename in enumerate(filenames):
     #print "bh = ", bh_pos[i]
 
     
-    #print snap_nobh
-
     if calc_profiles:
 
     
@@ -193,6 +190,7 @@ for i,filename in enumerate(filenames):
             ndens[i,j] = Nstars/dVol
             # bh case
             dens_bh[i,j] = Mstars_bh/dVol
+            ndens_bh[i,j] = Nstars_bh/dVol
             
         #
         # SPHERE OF INF DIAGNOSTICS
@@ -254,9 +252,11 @@ for i,filename in enumerate(filenames):
 
 # binned arrays
 menc_bin = np.zeros((nbins,mpoints))
+menc_bin_bh = np.zeros((nbins,mpoints))
 dens_bin = np.zeros((nbins,mpoints))
 dens_bin_bh = np.zeros((nbins,mpoints))
 ndens_bin = np.zeros((nbins,mpoints))
+ndens_bin_bh = np.zeros((nbins,mpoints))
 
 # bin slices
 slices = np.linspace(0,len(filenames),nbins,endpoint=False).astype(np.int)
@@ -268,7 +268,9 @@ for j,rad in enumerate(radii) :
     ndens_bin[:,j] = np.add.reduceat(ndens[:,j],slices)/binwidth
     
     # bh case
+    menc_bin_bh[:,j] = np.add.reduceat(menc_bh[:,j],slices)/binwidth    
     dens_bin_bh[:,j] = np.add.reduceat(dens_bh[:,j],slices)/binwidth
+    ndens_bin_bh[:,j] = np.add.reduceat(ndens_bh[:,j],slices)/binwidth
 
 
 # Read in bh-track file
@@ -334,23 +336,25 @@ if plot_menc_radius :
     plt.xlabel(r"$ r {\rm [pc]}$")
     plt.ylabel(r"$ M_{\rm enc} [M_\odot]$")
     plt.tight_layout(pad=1)
-    plt.show()
+    #plt.show()
+    plt.savefig("menc_radius.eps")
 
 if plot_menc_radius_bin :
     plt.clf()
     for i in range(nbins):
-        plt.loglog(radii*RSTAR,menc_bin[i,:],
+        plt.loglog(radii*RSTAR,menc_bin_bh[i,:],
                    color=profile_cm(float(i)/len(filenames)) 
                    )
     plt.xlabel(r"$ r {\rm [pc]}$")
     plt.ylabel(r"$ M_{\rm enc} [M_\odot]$")
     plt.tight_layout(pad=1)
-    plt.show()
+    #plt.show()
+    plt.savefig("menc_radius_bin.eps")
 
 if plot_dens_radius :
     plt.clf()
     for i in range(len(filenames)):
-        plt.loglog(radii*RSTAR,dens[i,:],
+        plt.loglog(radii*RSTAR,dens_bh[i,:],
                    color=profile_cm(float(i)/len(filenames)) 
                    )
 
@@ -362,46 +366,49 @@ if plot_dens_radius :
 if plot_dens_radius_bin :
     plt.clf()
     for i in range(nbins):
-        plt.loglog(radii*RSTAR,dens_bin[i,:],
+        plt.loglog(radii*RSTAR,dens_bin_bh[i,:],
                    color=profile_cm(float(i)/len(filenames)) 
                    )
     plt.ylabel(r"$ \rho [M_\odot {\rm pc}^{-3}]$")
     plt.xlabel(r"$ r {\rm [pc]}$")    
     plt.tight_layout(pad=1)
-    plt.show()
+    plt.savefig("dens_radius_bin.eps")
 
 if plot_ndens_radius :
     plt.clf()
     for i in range(len(filenames)):
-        plt.loglog(radii*RSTAR,ndens[i,:],
+        plt.loglog(radii*RSTAR,ndens_bh[i,:],
                    color=profile_cm(float(i)/len(filenames)) 
                    )
     plt.ylabel(r"$ n [{\rm pc}^{-3}]$")
     plt.xlabel(r"$ r {\rm [pc]}$")
     plt.tight_layout(pad=1)
-    plt.show()
+    #plt.show()
+    plt.savefig("ndens_radius.eps")
 
 if plot_ndens_radius_bin :
     plt.clf()
     for i in range(nbins):
-        plt.loglog(radii*RSTAR,ndens_bin[i,:],
+        plt.loglog(radii*RSTAR,ndens_bin_bh[i,:],
                    color=profile_cm(float(i)/len(filenames)) 
                    )
     plt.xlabel(r"$ r {\rm [pc]}$")
     plt.ylabel(r"$ n [{\rm pc}^{-3}]$")
     plt.tight_layout(pad=1)
-    plt.show()
+    #plt.show()
+    plt.savefig("ndens_radius_bin.eps")
 
 if plot_mavg_radius :
     plt.clf()
     for i in range(nbins):
-        plt.loglog(radii*RSTAR,dens_bin[i,:]/ndens_bin[i,:],
+        plt.loglog(radii*RSTAR,dens_bin_bh[i,:]/ndens_bin_bh[i,:],
                    color=plt.cm.rainbow(float(i)/len(filenames)) 
                    )
     plt.ylabel(r"$ \bar M [M_\odot]$")
     plt.xlabel(r"$ r {\rm [pc]}$")
     plt.tight_layout(pad=1)
-    plt.show()
+    #plt.show()
+    plt.savefig("mavg_radius_bin.eps")
 
 if plot_dens_radius_com_bh_comp :
     plt.clf()
