@@ -6,13 +6,23 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import ascii
+from astropy.table import Table
 import glob 
 #from scipy.interpolate import interp1d
 
-plot_mass_hist = True
-plot_hr_series = True
+plot_mass_hist = False
+plot_hr_series = False
+tabulate_ML_time = True
 
-filenames = glob.glob('hr/hr_single_00***.dat')
+directory = "../king_w7_A/"
+
+filenames = glob.glob(directory + 'hr/hr_single_*****.dat')
+filenames = sorted(filenames)
+print filenames
+
+times = ascii.read(directory + "hr/times.dat",names=['time'],format='no_header')
+
+scale = ascii.read(directory + "scales_astropy.dat")
 
 #
 # Set up plots
@@ -27,15 +37,30 @@ if plot_mass_hist :
 namelist = ('name','kstar','RI','mass','logL','logR','logTeff')
 filenames = sorted(filenames)
 
+
+if tabulate_ML_time:
+    ML = []
+
+
 for i,filename in enumerate(filenames):
     # read the file
+    print "about to read ...", filename 
     hr =  ascii.read(filename,
                      names=namelist,
                      guess=False,
                      format='no_header',
                      delimiter=' ')
     
-    #print hr
+    print filename, "... read"
+
+
+    #Tablulate total mass and luminosity
+    if tabulate_ML_time:
+        mtot = np.sum(hr['mass'])
+        ltot = np.sum(10**hr['logL'])
+        ML.append([times['time'][i],mtot,ltot])
+    
+
 
     # PLOT A MASS HISTOGRAM WITH TIME
     if plot_mass_hist :
@@ -73,3 +98,10 @@ for i,filename in enumerate(filenames):
 if plot_mass_hist:
     mass_hist.savefig("mass_histogram_time.eps",format='eps')
     
+# save the ML array
+if tabulate_ML_time:
+    MLT = Table(rows=ML,names=['time','mass','lum'])
+    print MLT
+    MLT.write(directory+'hr/mass_lum.dat',format='ascii')
+
+
