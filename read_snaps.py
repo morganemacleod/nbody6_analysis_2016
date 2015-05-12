@@ -4,7 +4,8 @@
 # python split_snaps.py   -- creates the individual series of snaps
 # grep "found at" output.dat | cut -c 16- > bh.dat   -- create bh.dat
 
-
+import matplotlib as mpl
+mpl.use('Agg')
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -61,14 +62,14 @@ SU = scale['su'].data[0]   # NB length to solar radii ?
 TSTAR = scale['tstar'].data[0] # TIMESCALE IN MYR
 
 
-filenames = glob.glob('snaps/snap_0000[0-9].dat')
+filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9].dat')
 filenames = sorted(filenames)
 print filenames
 print ""
 print "Reading ",len(filenames), "  files..."
 print ""
 # Setup some array-binning 
-binwidth = 100
+binwidth = 1
 nbins = int(len(filenames)/binwidth)
 print ""
 print "binning ", len(filenames)," files into ",nbins, " bins of width ",binwidth 
