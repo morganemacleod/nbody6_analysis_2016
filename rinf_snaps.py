@@ -6,8 +6,8 @@ import glob
 
 plot_save = True
 plot_E_L = False
-plot_a_time = True
-count_binarity = True
+save_a_time = True
+count_binarity = False
 
 
 # set some global options
@@ -24,16 +24,7 @@ plt.rcParams['font.size'] = 16
 #
 # PARAMETERS
 #
-#npart0 = 64001
-bhmassf = 0.009
-# SCALINGS 
-# PHYSICAL SCALING:    R* = 3.00  M* = 32884.2  V* = 6.894  T* = 0.425  <M> = 0.52  SU = 1.3E+08
-#RSTAR = 3.0      # RADIUS OF 1 NB UNIT IN PC
-#MSTAR = 32884.2  # TOTAL MASS, initial
-#VSTAR = 6.894  # velocity in KM/S
-#MAVG = 0.52  # Avg mass in msun
-#SU = 1.3e8   # NB length to solar radii ? 
-#TSTAR = 0.425 # TIMESCALE IN MYR
+bhmassf = 0.002
 
 
 #
@@ -126,7 +117,7 @@ for j,filename in enumerate(filenames):
     #print "offset = ",offset, a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
 
 # now save / plot a vs time
-if plot_a_time:
+if save_a_time:
     namesaout = ('time','rmbh','a1','a2','a3','a4','a5','a6','a7','a8','a9','a10')
     ascii.write(a_time,"semi_time_inner_10.dat",
                 names=namesaout)

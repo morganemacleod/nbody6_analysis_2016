@@ -27,7 +27,7 @@ plot_dens_radius_com_bh_comp = False
 plot_ndens_radius = False
 plot_ndens_radius_bin = False
 
-plot_mavg_radius = True
+plot_mavg_radius = False
 
 plot_bh_ener = False
 plot_save = False
@@ -48,17 +48,18 @@ plt.rcParams['font.size'] = 16
 #
 # PARAMETERS
 #
-npart0 = 128001
-bhmassf = 0.009
+npart0 = 100001
+bhmassf = 0.002
 # SCALINGS 
-RSTAR = 2.5      # RADIUS OF 1 NB UNIT IN PC
-MSTAR = 65738.9  # TOTAL MASS, initial
-VSTAR = 10.680  # velocity in KM/S
-MAVG = 0.52  # Avg mass in msun
-SU = 1.1e8   # NB length to solar radii ? 
-TSTAR = 0.229 # TIMESCALE IN MYR
+scale = ascii.read("scales_astropy.dat")
+RSTAR = scale['rstar'].data[0]      # RADIUS OF 1 NB UNIT IN PC
+MSTAR = scale['mstar'].data[0]  # TOTAL MASS, initial
+VSTAR = scale['vstar'].data[0]  # velocity in KM/S
+MAVG = scale['mavg'].data[0]  # Avg mass in msun
+SU = scale['su'].data[0]   # NB length to solar radii ? 
+TSTAR = scale['tstar'].data[0] # TIMESCALE IN MYR
 
-filenames = glob.glob('snaps/snap_0****.dat')
+filenames = glob.glob('snaps/snap_0000*.dat')
 filenames = sorted(filenames)
 print filenames
 print ""
@@ -207,7 +208,7 @@ for i,filename in enumerate(filenames):
         selection_rinf = snap_nobh[mask_rinf]
         print "N* (<rinf) = ", len(selection_rinf)
         print "M* (<rinf) = ", np.sum(selection_rinf["mass"]*MSTAR) 
-        print "next most massive stars =", sorted(selection_rinf['mass']*MSTAR)[-1:-3]
+        #print "next most massive stars =", sorted(selection_rinf['mass']*MSTAR)[-1:-3]
         
         # rank the energies
         energies_rinf = (0.5 * (selection_rinf['vx']**2. + 
