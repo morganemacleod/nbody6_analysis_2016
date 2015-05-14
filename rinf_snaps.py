@@ -56,7 +56,7 @@ print f40
 
 # IF READING THE FULL SNAPSHOTS AND SAVING THE INF RADII ONES
 #filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9]_rinf.dat')
-filenames = glob.glob('snaps/snap_010[0-9][0-9]_rinf.dat')
+filenames = glob.glob('snaps/snap_0000[0-9]_rinf.dat')
 filenames = sorted(filenames)
 print filenames
 print ""
@@ -109,20 +109,27 @@ for j,filename in enumerate(filenames):
     #    offset = 1
     #else :
     #    offset = 0
-    offset = 1
+    offset = 0
 
+    # print some diagnostics
     print "t = ",times['time'][j]
     print "rmbh = ",max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
     print "len sma>0 = ",len(semi[semi>0])
-    print "sorted sma = ",sorted(semi[semi>0]) #[0+offset:10+offset]
+    print "sorted sma = ",sorted(semi[semi>0])
     #print semi
+
+    # make semilist object
+    semilist = np.zeros(10)-99
+    maxind = min(len(semi[semi>0]),10)
+    semilist[0:maxind] = sorted(semi[semi>0])[offset:maxind]
+    print "sorted sma (again) = ",sorted(semi[semi>0])[offset:maxind]
+    print "semilist           = ",semilist
+
 
     a_time[j,0] = times['time'][j]
     a_time[j,1] = max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
-    a_time[j,2:12] = sorted(semi[semi>0])[0+offset:10+offset]
-    #print a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
-    #print sorted(semi[semi>0])
-    #print "offset = ",offset, a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
+    a_time[j,2:12] = semilist[:]
+ 
 
 # now save / plot a vs time
 if save_a_time:
