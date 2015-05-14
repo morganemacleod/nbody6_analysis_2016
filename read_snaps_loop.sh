@@ -1,4 +1,4 @@
-cd ../100K/
+cd ../200K/
 for d in king_w7*/ ; do
     echo "$d";
     cd $d

@@ -4,7 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from astropy.io import ascii
 import glob 
 
-plot_save = True
+plot_save = False
 plot_E_L = False
 save_a_time = True
 count_binarity = False
@@ -31,8 +31,10 @@ bhmassf = 0.002
 # READ IN THE COMPANION FILE... 
 #
 times = ascii.read("snaps/times.dat",
-                   format='no_header')
-print times
+                   format='no_header',
+                   names=['time'])
+#print times
+print "...times file read"
 
 namelist = ('T','NAME1','NAME2','KS1','KS2','MASS1','MASS2',
             'RADIUS1','RADIUS2','NP','E','A','P','EB','E3',
@@ -45,7 +47,7 @@ f40 = ascii.read("fort.40",
                  guess=False,
                  format='no_header',
                  delimiter=' ')
-print "file read"
+print "... file read"
 
 
 
@@ -53,7 +55,8 @@ print "file read"
 
 
 # IF READING THE FULL SNAPSHOTS AND SAVING THE INF RADII ONES
-filenames = glob.glob('snaps/snap_0****_rinf.dat')
+#filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9]_rinf.dat')
+filenames = glob.glob('snaps/snap_0000[0-9]_rinf.dat')
 filenames = sorted(filenames)
 print filenames
 print ""
@@ -66,18 +69,18 @@ print ""
 a_time = np.zeros((len(filenames),12))
 comp_sma = np.zeros(len(filenames))
 for j,filename in enumerate(filenames):
-    print "reading ", filename
-    snap = ascii.read(filename)
+    print "reading ... ", filename
+    snap = ascii.read(filename,guess=False,delimiter=' ')
     Nparticles = len(snap)
     print "Particles in snapshot = ", Nparticles
     #print snap
 
     # get bh mass
-    bhmass = np.interp(times['col1'][j],f40['T'],f40['MASS1'])
+    bhmass = np.interp(times['time'][j],f40['T'],f40['MASS1'])
     print "bh mass = ",bhmass
 
     # get companion SMA 
-    comp_sma[j] = np.interp(times['col1'][j],f40['T'],f40['A'])
+    comp_sma[j] = np.interp(times['time'][j],f40['T'],f40['A'])
     
 
     # Make Some Plots... 
@@ -109,7 +112,7 @@ for j,filename in enumerate(filenames):
     offset = 1
 
 
-    a_time[j][0] = times['col1'][j]
+    a_time[j][0] = times['time'][j]
     a_time[j][1] = max( np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
     a_time[j][2:12] = sorted(semi[semi>0])[0+offset:10+offset]
     #print a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
@@ -118,6 +121,11 @@ for j,filename in enumerate(filenames):
 
 # now save / plot a vs time
 if save_a_time:
+    print "hello in save sma data loop"
+    print a_time
+    print a_time.shape
+    
+
     namesaout = ('time','rmbh','a1','a2','a3','a4','a5','a6','a7','a8','a9','a10')
     ascii.write(a_time,"semi_time_inner_10.dat",
                 names=namesaout)
