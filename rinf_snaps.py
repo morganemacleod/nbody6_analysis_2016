@@ -48,7 +48,7 @@ f40 = ascii.read("fort.40",
                  format='no_header',
                  delimiter=' ')
 print "... file read"
-
+print f40
 
 
 
@@ -56,7 +56,7 @@ print "... file read"
 
 # IF READING THE FULL SNAPSHOTS AND SAVING THE INF RADII ONES
 #filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9]_rinf.dat')
-filenames = glob.glob('snaps/snap_0000[0-9]_rinf.dat')
+filenames = glob.glob('snaps/snap_010[0-9][0-9]_rinf.dat')
 filenames = sorted(filenames)
 print filenames
 print ""
@@ -88,8 +88,8 @@ for j,filename in enumerate(filenames):
     angular_momentum = np.zeros(Nparticles)
     ener = np.zeros(Nparticles)
     semi = np.zeros(Nparticles)
+    # loop through the particles
     for i in range(Nparticles) :
-
         pos = np.array([ snap['x'][i], snap['y'][i], snap['z'][i] ])
         vel = np.array([ snap['vx'][i],snap['vy'][i],snap['vz'][i] ])
         # particle angular momentum
@@ -111,10 +111,15 @@ for j,filename in enumerate(filenames):
     #    offset = 0
     offset = 1
 
+    print "t = ",times['time'][j]
+    print "rmbh = ",max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
+    print "len sma>0 = ",len(semi[semi>0])
+    print "sorted sma = ",sorted(semi[semi>0]) #[0+offset:10+offset]
+    #print semi
 
-    a_time[j][0] = times['time'][j]
-    a_time[j][1] = max( np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
-    a_time[j][2:12] = sorted(semi[semi>0])[0+offset:10+offset]
+    a_time[j,0] = times['time'][j]
+    a_time[j,1] = max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
+    a_time[j,2:12] = sorted(semi[semi>0])[0+offset:10+offset]
     #print a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
     #print sorted(semi[semi>0])
     #print "offset = ",offset, a_time[j][1],sorted(semi[semi>0])[0],sorted(semi[semi>0])[1] 
