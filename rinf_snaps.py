@@ -48,19 +48,19 @@ f40 = ascii.read("fort.40",
                  format='no_header',
                  delimiter=' ')
 print "... file read"
-print f40
+#print f40
 
 
 
 
 
 # IF READING THE FULL SNAPSHOTS AND SAVING THE INF RADII ONES
-#filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9]_rinf.dat')
-filenames = glob.glob('snaps/snap_0000[0-9]_rinf.dat')
+filenames = glob.glob('snaps/snap_0[0-9][0-9][0-9][0-9]_rinf.dat')
+#filenames = glob.glob('snaps/snap_0000[0-9]_rinf.dat')
 filenames = sorted(filenames)
-print filenames
 print ""
 print "Reading ",len(filenames), "  files..."
+print filenames[0]," .... ",filenames[-1]
 print ""
 
 #
@@ -72,12 +72,12 @@ for j,filename in enumerate(filenames):
     print "reading ... ", filename
     snap = ascii.read(filename,guess=False,delimiter=' ')
     Nparticles = len(snap)
-    print "Particles in snapshot = ", Nparticles
+    print "     Particles in snapshot = ", Nparticles
     #print snap
 
     # get bh mass
     bhmass = np.interp(times['time'][j],f40['T'],f40['MASS1'])
-    print "bh mass = ",bhmass
+    print "     bh mass = ",bhmass
 
     # get companion SMA 
     comp_sma[j] = np.interp(times['time'][j],f40['T'],f40['A'])
@@ -112,33 +112,26 @@ for j,filename in enumerate(filenames):
     offset = 0
 
     # print some diagnostics
-    print "t = ",times['time'][j]
-    print "rmbh = ",max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
-    print "len sma>0 = ",len(semi[semi>0])
-    print "sorted sma = ",sorted(semi[semi>0])
-    #print semi
-
+    #print "t = ",times['time'][j]
+    #print "rmbh = ",max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
+    print "     len sma>0 = ",len(semi[semi>0])
+    #print "sorted sma = ",sorted(semi[semi>0])
+    
     # make semilist object
     semilist = np.zeros(10)-99
     maxind = min(len(semi[semi>0]),10)
     semilist[0:maxind] = sorted(semi[semi>0])[offset:maxind]
-    print "sorted sma (again) = ",sorted(semi[semi>0])[offset:maxind]
-    print "semilist           = ",semilist
-
 
     a_time[j,0] = times['time'][j]
     a_time[j,1] = max(np.sqrt(snap['x']**2. + snap['y']**2. + snap['z']**2.))
-    a_time[j,2:12] = semilist[:]
+    a_time[j,2:12] = semilist
  
 
 # now save / plot a vs time
 if save_a_time:
-    print "hello in save sma data loop"
-    print a_time
-    print a_time.shape
+    print "hello in save sma data loop saving a_time in shape:", a_time.shape
     
-
-    namesaout = ('time','rmbh','a1','a2','a3','a4','a5','a6','a7','a8','a9','a10')
+    namesaout = ('time','rmbh','a0','a1','a2','a3','a4','a5','a6','a7','a8','a9')
     ascii.write(a_time,"semi_time_inner_10.dat",
                 names=namesaout)
 
