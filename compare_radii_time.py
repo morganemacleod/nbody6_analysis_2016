@@ -17,6 +17,7 @@ plt.rcParams['font.size'] = 16
 
 folders = ["../100K/king_w7_A/","../100K/king_w7_B/","../100K/king_w7_C/",
            "../100K/king_w7lk_B/","../100K/king_w7lk_C/","../100K/king_w7lk_D/",
+           "../100K/king_w7bh_A/","../100K/king_w7bh_B/","../100K/king_w7bh_D/",
            "../200K/king_w7_200_A/","../200K/king_w7_200_B/"]
 
 chm_file = "core_hm_radii.dat"
@@ -24,6 +25,7 @@ time_file = "mttime.dat"
 
 colors = ["DarkGreen","DarkGreen","DarkGreen",
           "Black","Black","Black",
+          "OrangeRed","OrangeRed","OrangeRed",
           "DodgerBlue","DodgerBlue"]
 
 for i,directory in enumerate(folders):

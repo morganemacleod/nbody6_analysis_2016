@@ -11,3 +11,4 @@
 7. run sh split_hr_loop.sh to split all hr diagram files
 8. run read_hr.py to produce M/L diagnostics
 9. run read_snaps.py to produce rinf_snaps, profiles, etc, need to loop over dirs. 
+10. run rinf_snaps_loop.sh to produce semi's files

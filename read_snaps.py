@@ -51,7 +51,7 @@ plt.rcParams['font.size'] = 16
 #
 #
 npart0 = 100001
-bhmassf = 0.002
+bhmassf = 0.001
 # SCALINGS 
 scale = ascii.read("scales_astropy.dat")
 RSTAR = scale['rstar'].data[0]      # RADIUS OF 1 NB UNIT IN PC

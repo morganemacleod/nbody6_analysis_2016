@@ -15,17 +15,31 @@ plt.rcParams['legend.handletextpad'] = 0.1
 plt.rcParams['font.family'] = 'stixgeneral'
 plt.rcParams['font.size'] = 16
 
-folders = ["../king_w3_A/","../king_w3_B/","../king_w3_C/","../king_w3_D/",
-           "../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
-           "../king_w7_A/","../king_w7_B/","../king_w7_C/",
-           "../king_w7lk_B/","../king_w7lk_C/","../king_w7lk_D/"]
+#folders = ["../king_w3_A/","../king_w3_B/","../king_w3_C/","../king_w3_D/",
+#           "../king_w7rt_A/","../king_w7rt_B/","../king_w7rt_C/",
+#           "../king_w7_A/","../king_w7_B/","../king_w7_C/",
+#           "../king_w7lk_B/","../king_w7lk_C/","../king_w7lk_D/",
+#           "../king_w7bh_A/","../king_w7bh_B/","../king_w7bh_D/"]
+
+folders = ["../100K/king_w7_A/","../100K/king_w7_B/","../100K/king_w7_C/",
+           "../100K/king_w7lk_B/","../100K/king_w7lk_C/","../100K/king_w7lk_D/",
+           "../100K/king_w7bh_A/","../100K/king_w7bh_B/","../100K/king_w7bh_D/",
+           "../200K/king_w7_200_A/","../200K/king_w7_200_B/"]
+
+colors = ["DarkGreen","DarkGreen","DarkGreen",
+          "Black","Black","Black",
+          "OrangeRed","OrangeRed","OrangeRed",
+          "DodgerBlue","DodgerBlue"]
+
+
 
 time_file = "snaptime.dat"
 
-colors = ["SaddleBrown","SaddleBrown","SaddleBrown","SaddleBrown",
-          "DarkGreen","DarkGreen","DarkGreen",
-          "Black","Black","Black",
-          "DodgerBlue","DodgerBlue","DodgerBlue"]
+#colors = ["SaddleBrown","SaddleBrown","SaddleBrown","SaddleBrown",
+#          "DarkGreen","DarkGreen","DarkGreen",
+#          "Black","Black","Black",
+#          "DodgerBlue","DodgerBlue","DodgerBlue",
+#          "OrangeRed","OrangeRed","OrangeRed"]
 
 for i,directory in enumerate(folders):
     
