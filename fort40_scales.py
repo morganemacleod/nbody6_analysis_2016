@@ -29,7 +29,7 @@ sse = ascii.read("/trove/mmacleod/nbody_runs/nbody_analysis/evolve_mo.dat",
 print "... sse read"
 
 # initial mass in msun, age in Myr
-def LRT_at_age(Mi,age,decimal=1):
+def LRT_at_age(Mi,age,decimal=2):
     mask = (sse['Mi']==np.round(Mi,decimals=decimal))
     Lum = np.interp(age,sse[mask]['Tev'],sse[mask]['logL'])
     Rad = np.interp(age,sse[mask]['Tev'],sse[mask]['logR'])
