@@ -12,3 +12,7 @@
 8. run read_hr.py to produce M/L diagnostics
 9. run read_snaps.py to produce rinf_snaps, profiles, etc, need to loop over dirs. 
 10. run rinf_snaps_loop.sh to produce semi's files
+11. use fort40_loop.sh to convert fort.40 files to physical units
+12. use scripts in aggregated_data to get files grouped by category
+13. use count_term_loop.sh to loop through and count termination prospects, produces t_residence.dat
+14. use t_res_loop.sh to rescale the t_residence to physical units
