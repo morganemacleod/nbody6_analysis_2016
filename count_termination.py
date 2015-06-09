@@ -74,7 +74,16 @@ for i,time in enumerate(f57['time']):
 count_TDEs = len(f57['time']) 
 print "Out of %i TDEs, %i were the most bound, or a fraction: %f" % (count_TDEs,count_mb_TDEs,float(count_mb_TDEs)/float(count_TDEs))
 
-print "There were %i compact object inspirals" % len(insp['time'])
+
+count_mb_insp = 0
+for i,time in enumerate(insp['time']):
+    tfloor = np.floor(time)
+    mb = f40[np.round(f40['T'])==tfloor]['NAME2']
+    if (len(mb) == 0) : mb = [-99]
+    if(f57['ID2'][i] == mb[0]) :
+        count_mb_insp = count_mb_insp + 1
+
+print "Out of %i insp, %i were the most bound" % (len(insp),count_mb_insp)
 
 
 namelist50 = ('nwrite','time','gamma',
