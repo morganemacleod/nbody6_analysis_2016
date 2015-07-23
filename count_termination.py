@@ -80,7 +80,7 @@ for i,time in enumerate(insp['time']):
     tfloor = np.floor(time)
     mb = f40[np.round(f40['T'])==tfloor]['NAME2']
     if (len(mb) == 0) : mb = [-99]
-    if(f57['ID2'][i] == mb[0]) :
+    if(insp['ID2'][i] == mb[0]) :
         count_mb_insp = count_mb_insp + 1
 
 print "Out of %i insp, %i were the most bound" % (len(insp),count_mb_insp)

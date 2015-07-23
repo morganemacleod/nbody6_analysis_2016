@@ -9,7 +9,8 @@ fout = 'scales_astropy.dat'
 #           "../king_w7_A/","../king_w7_B/","../king_w7_C/",
 #           "../king_w7lk_B/","../king_w7lk_C/","../king_w7lk_D/"]
 #folders = ["../200K/king_w7_200_A/","../200K/king_w7_200_B/"]
-folders = ["../100K/king_w7bh_A/","../100K/king_w7bh_B/","../100K/king_w7bh_D/"]
+#folders = ["../100K/king_w7bh_A/","../100K/king_w7bh_B/","../100K/king_w7bh_D/"]
+folders = ["../200K/king_w7_A/","../200K/king_w7_B/","../200K/king_w7_C/","../200K/king_w7_D/"]
 
 numbers = re.compile("-?\ *[0-9]+\.?[0-9]*(?:[Ee]\ *[-+]?\ *[0-9]+)?")
 

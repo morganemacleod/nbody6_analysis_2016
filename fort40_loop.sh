@@ -1,5 +1,5 @@
-cd ../100K/
-for d in king_w7*/ ; do
+cd ../200K/
+for d in king_w7_D/ ; do
     echo "$d";
     cd $d
     pwd
